@@ -9,6 +9,8 @@ namespace UnknownGames
         // private variables here
         private Vector3 moveDelta;
         private RaycastHit2D hit;
+        private Rigidbody2D rigidbody2d;
+        private Camera viewCamera;
 
         #endregion
 
@@ -21,8 +23,39 @@ namespace UnknownGames
         #endregion
 
         #region UNITY METHODS
-        
+
+        private void Start()
+        {
+            rigidbody2d = GetComponent<Rigidbody2D>();
+            viewCamera = Camera.main;
+        }
+
         private void Update()
+        {
+            var dir = Input.mousePosition - viewCamera.WorldToScreenPoint(transform.position);
+            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            CollideWithTiles();
+
+            #region Movement
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+
+            //MoveDelta reset
+            moveDelta = new Vector3(x, y, 0) * Time.deltaTime * speed;
+
+            transform.localScale = Vector3.one;
+            #endregion
+        }
+
+        #endregion
+
+        #region PRIVATE METHODS
+
+        // private methods here
+
+        private void CollideWithTiles()
         {
             //collision detection y axis
             hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
@@ -39,21 +72,7 @@ namespace UnknownGames
                 //Movement
                 transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
             }
-
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
-
-            //MoveDelta reset
-            moveDelta = new Vector3(x, y, 0) * Time.deltaTime * speed;
-
-            transform.localScale = Vector3.one;
         }
-
-        #endregion
-
-        #region PRIVATE METHODS
-
-        // private methods here
 
         #endregion
 
