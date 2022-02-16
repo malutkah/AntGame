@@ -11,6 +11,7 @@ namespace UnknownGames
         private RaycastHit2D hit;
         private Rigidbody2D rigidbody2d;
         private Camera viewCamera;
+        private Vector2 moveDir;
 
         #endregion
 
@@ -32,51 +33,53 @@ namespace UnknownGames
 
         private void Update()
         {
+            moveDir = Vector2.zero;
             var dir = Input.mousePosition - viewCamera.WorldToScreenPoint(transform.position);
             var angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
-            if (hit.collider == null)
-            {
-                //Movement
-                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-            }
+            //hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDir.y), Mathf.Abs(moveDir.y * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
+            //if (hit.collider == null)
+            //{
+            //    //Movement                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            //    rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
+            //}
 
-            //collision detection x axis
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
-            if (hit.collider == null)
-            {
-                //Movement
-                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
-            }
+            ////collision detection x axis
+            //hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDir.x, 0), Mathf.Abs(moveDir.x * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
+            //if (hit.collider == null)
+            //{
+            //    //Movement                 transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            //    rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
+            //}
 
             #region Movement
-
-            var moveDir = Vector2.zero;
 
             if (Input.GetKey(KeyCode.A))
             {
                 moveDir.x = -1;
             }
-            else if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 moveDir.x = 1;
             }
-            else if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 moveDir.y = 1;
             }
-            else if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.S))
             {
                 moveDir.y = -1;
             }
 
             moveDir.Normalize();
 
-            rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
-
             #endregion
+        }
+
+        private void FixedUpdate()
+        {
+            rigidbody2d.MovePosition(rigidbody2d.position + moveDir * speed * Time.fixedDeltaTime);
         }
 
         #endregion
