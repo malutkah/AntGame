@@ -36,7 +36,7 @@ namespace UnknownGames
                 angleInDegrees += transform.eulerAngles.z;
             }
 
-            return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), -Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+            return new Vector3(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
         }
         #endregion
     }
