@@ -25,6 +25,13 @@ namespace UnknownGames
 
             Handles.DrawLine(startPoint, endPointA);
             Handles.DrawLine(startPoint, endPointB);
+
+
+            Handles.color = Color.red;
+            foreach (var visibleTarget in playerFOV.VisibleTargets)
+            {
+                Handles.DrawLine(playerFOV.transform.position, visibleTarget.position);
+            }
         }
     }
 }

@@ -53,3 +53,6 @@ TagManager:
   - name: Player
     uniqueID: 3485347811
     locked: 0
+  - name: Target
+    uniqueID: 984279853
+    locked: 0
