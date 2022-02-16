@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca83e9e32394e1c4a8a1b42e0c0839e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 400
+  speed: 2
   boxCollider: {fileID: 1070832846}
 --- !u!212 &1070832844
 SpriteRenderer:

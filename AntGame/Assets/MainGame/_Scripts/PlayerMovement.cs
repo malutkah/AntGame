@@ -36,16 +36,46 @@ namespace UnknownGames
             var angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            CollideWithTiles();
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
+            if (hit.collider == null)
+            {
+                //Movement
+                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            }
+
+            //collision detection x axis
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
+            if (hit.collider == null)
+            {
+                //Movement
+                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            }
 
             #region Movement
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
 
-            //MoveDelta reset
-            moveDelta = new Vector3(x, y, 0) * Time.deltaTime * speed;
+            var moveDir = Vector2.zero;
 
-            transform.localScale = Vector3.one;
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveDir.x = -1;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                moveDir.x = 1;
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                moveDir.y = 1;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                moveDir.y = -1;
+            }
+
+            moveDir.Normalize();
+
+            rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
+
             #endregion
         }
 
