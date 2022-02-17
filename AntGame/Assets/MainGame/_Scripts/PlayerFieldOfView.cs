@@ -42,7 +42,7 @@ namespace UnknownGames
             StartCoroutine("FindTargetWithDelay", .2f);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             DrawFoV();
         }
@@ -133,7 +133,7 @@ namespace UnknownGames
 
         private ViewCastInfo ViewCast(float globalAngle)
         {
-            Vector3 dir = DirectionFromAngle(globalAngle, false);
+            Vector2 dir = DirectionFromAngle(globalAngle);
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(dir.x, dir.y), ViewRadius, ObstacleMask);
 
             //RaycastHit hitt;
@@ -145,11 +145,18 @@ namespace UnknownGames
             //else
             //{
             //    return new ViewCastInfo(false, transform.position + dir * ViewRadius, ViewRadius, globalAngle);
-            //}
 
-            return hit
-                ? new ViewCastInfo(true, hit.point, hit.distance, globalAngle)
-                : new ViewCastInfo(false, transform.position + dir * ViewRadius, ViewRadius, globalAngle);
+
+            if (hit)
+            {
+                Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.red);
+                return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            }
+            else
+            {
+                return new ViewCastInfo(false, transform.position + (Vector3)dir * ViewRadius, ViewRadius, globalAngle);
+                //Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.red);
+            }
         }
 
         #endregion
@@ -164,6 +171,13 @@ namespace UnknownGames
             }
 
             return new Vector3(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+        }
+
+        public Vector2 DirectionFromAngle(float angleInDegrees)
+        {
+            angleInDegrees += transform.eulerAngles.z;
+
+            return new Vector2(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }
 
         public struct ViewCastInfo
