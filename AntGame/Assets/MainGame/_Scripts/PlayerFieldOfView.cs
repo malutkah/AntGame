@@ -54,13 +54,13 @@ namespace UnknownGames
 
         private void DrawFoV()
         {
-            int stepCount = Mathf.RoundToInt(ViewAngle * MeshResolution);
+            int rayCount = Mathf.RoundToInt(ViewAngle * MeshResolution);
 
-            float stepAngleSize = ViewAngle / stepCount;
+            float stepAngleSize = ViewAngle / rayCount;
 
             List<Vector2> viewPoints = new List<Vector2>();
 
-            for (int i = 0; i <= stepCount; i++)
+            for (int i = 0; i <= rayCount; i++)
             {
                 float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
                 //Debug.DrawLine(transform.position, transform.position + DirectionFromAngle(angle, false) * ViewRadius, Color.blue);
@@ -71,10 +71,11 @@ namespace UnknownGames
 
             int vertexCount = viewPoints.Count + 1;
 
-            Vector2[] vertices = new Vector2[vertexCount];
+            Vector3[] vertices = new Vector3[vertexCount];
+            Vector2[] uv = new Vector2[vertices.Length];
             int[] triangles = new int[(vertexCount - 2) * 3];
 
-            vertices[0] = Vector2.zero;
+            vertices[0] = Vector3.zero;
 
             for (int i = 0; i < vertexCount - 1; i++)
             {
@@ -88,12 +89,13 @@ namespace UnknownGames
                 }
             }
 
-            Vector3[] vertices3D = System.Array.ConvertAll<Vector2, Vector3>(vertices, v => v);
+            //Vector3[] vertices3D = System.Array.ConvertAll<Vector2, Vector3>(vertices, v => v);
 
-            viewMesh.Clear();
-            viewMesh.vertices = vertices3D;
+            //viewMesh.Clear();
+            viewMesh.vertices = vertices;
+            viewMesh.uv = uv;
             viewMesh.triangles = triangles;
-            viewMesh.RecalculateNormals();
+            //viewMesh.RecalculateNormals();
 
         }
 
@@ -133,7 +135,7 @@ namespace UnknownGames
 
         private ViewCastInfo ViewCast(float globalAngle)
         {
-            Vector2 dir = DirectionFromAngle(globalAngle);
+            Vector3 dir = DirectionFromAngle(globalAngle, false);
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(dir.x, dir.y), ViewRadius, ObstacleMask);
 
             //RaycastHit hitt;
@@ -145,18 +147,11 @@ namespace UnknownGames
             //else
             //{
             //    return new ViewCastInfo(false, transform.position + dir * ViewRadius, ViewRadius, globalAngle);
+            //}
 
-
-            if (hit)
-            {
-                Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.red);
-                return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
-            }
-            else
-            {
-                return new ViewCastInfo(false, transform.position + (Vector3)dir * ViewRadius, ViewRadius, globalAngle);
-                //Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.red);
-            }
+            return hit
+                ? new ViewCastInfo(true, hit.point, hit.distance, globalAngle)
+                : new ViewCastInfo(false, transform.position + dir * ViewRadius, ViewRadius, globalAngle);
         }
 
         #endregion
@@ -169,15 +164,10 @@ namespace UnknownGames
             {
                 angleInDegrees += transform.eulerAngles.z;
             }
+            float angle = angleInDegrees * (Mathf.PI / 180f);
 
-            return new Vector3(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
-        }
-
-        public Vector2 DirectionFromAngle(float angleInDegrees)
-        {
-            angleInDegrees += transform.eulerAngles.z;
-
-            return new Vector2(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+            //return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+            return new Vector3(-Mathf.Cos(angle), -Mathf.Sin(angle), 0);
         }
 
         public struct ViewCastInfo

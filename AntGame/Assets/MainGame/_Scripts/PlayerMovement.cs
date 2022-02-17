@@ -33,25 +33,17 @@ namespace UnknownGames
 
         private void Update()
         {
+            //Vector3 mousePos = Input.mousePosition;
+            //mousePos = viewCamera.ScreenToWorldPoint(mousePos);
+
+            //Vector2 direction = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
+
+            //transform.up = direction;
+
             moveDir = Vector2.zero;
             var dir = Input.mousePosition - viewCamera.WorldToScreenPoint(transform.position);
             var angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            //hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDir.y), Mathf.Abs(moveDir.y * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
-            //if (hit.collider == null)
-            //{
-            //    //Movement                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-            //    rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
-            //}
-
-            ////collision detection x axis
-            //hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDir.x, 0), Mathf.Abs(moveDir.x * Time.deltaTime), LayerMask.GetMask("Characters", "Blocking"));
-            //if (hit.collider == null)
-            //{
-            //    //Movement                 transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
-            //    rigidbody2d.velocity = speed * moveDir * Time.deltaTime;
-            //}
 
             #region Movement
 
