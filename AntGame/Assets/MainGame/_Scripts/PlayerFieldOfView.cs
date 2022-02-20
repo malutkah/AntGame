@@ -166,8 +166,8 @@ namespace UnknownGames
             }
             float angle = angleInDegrees * (Mathf.PI / 180f);
 
-            //return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
-            return new Vector3(-Mathf.Cos(angle), -Mathf.Sin(angle), 0);
+            return new Vector3(-Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+            //return new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
         }
 
         public struct ViewCastInfo
