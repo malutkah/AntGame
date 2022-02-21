@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace UnknownGames
 {
@@ -8,6 +9,9 @@ namespace UnknownGames
         #region PRIVATE VARIABLES
 
         // private variables here
+        private float viewAngle;
+        private Transform player;
+        private Color originalSpotLightColor;
 
         #endregion
 
@@ -18,13 +22,25 @@ namespace UnknownGames
         public float MoveSpeed = 5f;
         public float WaitTimeInSec = 1f;
         public float TurnSpeed = 90f;
+        public LayerMask ViewMask;
+        public Light2D SpotLight;
+
+        public float ViewDistance;
 
         #endregion
 
         #region UNITY METHODS
 
+        private void Awake()
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
         private void Start()
         {
+            viewAngle = SpotLight.pointLightInnerAngle;
+            originalSpotLightColor = SpotLight.color;
+
             Vector3[] waypoint = new Vector3[pathHolder.childCount];
 
             for (int k = 0; k < waypoint.Length; k++)
@@ -33,6 +49,18 @@ namespace UnknownGames
             }
 
             StartCoroutine(FollowPath(waypoint));
+        }
+
+        private void Update()
+        {
+            if (CanSeePlayer())
+            {
+                SpotLight.color = Color.red;
+            }
+            else
+            {
+                SpotLight.color = originalSpotLightColor;
+            }
         }
 
         private void OnDrawGizmos()
@@ -47,6 +75,9 @@ namespace UnknownGames
                 prevPos = waypoint.position;
             }
 
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(transform.position, transform.position * ViewDistance);
+
         }
 
         #endregion
@@ -54,6 +85,27 @@ namespace UnknownGames
         #region PRIVATE METHODS
 
         // private methods here
+
+        private bool CanSeePlayer()
+        {
+            if ((Vector3.Distance(transform.position, player.position) / 10f) < (ViewDistance * 10f))
+            {
+                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+                //new Vector3(0, transform.position.y, transform.position.z)
+                float angleBetweenGuardAndPlayer = Vector3.Angle(new Vector3(0, transform.position.y, transform.position.z), directionToPlayer);
+
+                if (angleBetweenGuardAndPlayer < viewAngle / 2f)
+                {
+                    if (Physics.Linecast(transform.position, player.position, ViewMask))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         private IEnumerator FaceNextWaypoint(Vector3 target)
         {
@@ -71,7 +123,7 @@ namespace UnknownGames
 
         IEnumerator FollowPath(Vector3[] waypoints)
         {
-            transform.position = waypoints[0]; 
+            transform.position = waypoints[0];
 
             int targetWaypointIndex = 1;
             bool reachedLastWaypoint = false;
