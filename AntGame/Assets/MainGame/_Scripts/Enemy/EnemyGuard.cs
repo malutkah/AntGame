@@ -67,7 +67,7 @@ namespace UnknownGames
         private IEnumerator FaceNextWaypoint(Vector3 target)
         {
             Vector3 directonToFaceTarget = (target - transform.position).normalized;
-            float targetAngle = 90 + Mathf.Atan2(directonToFaceTarget.y, directonToFaceTarget.x) * Mathf.Rad2Deg;
+            float targetAngle = 270 + Mathf.Atan2(directonToFaceTarget.y, directonToFaceTarget.x) * Mathf.Rad2Deg;
 
             while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.z, targetAngle)) > 0.05f)
             {
