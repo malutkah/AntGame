@@ -67,12 +67,12 @@ namespace UnknownGames
         private IEnumerator FaceNextWaypoint(Vector3 target)
         {
             Vector3 directonToFaceTarget = (target - transform.position).normalized;
-            float targetAngle = 180 - Mathf.Atan2(directonToFaceTarget.z, directonToFaceTarget.x) * Mathf.Rad2Deg;
+            float targetAngle = 90 + Mathf.Atan2(directonToFaceTarget.y, directonToFaceTarget.x) * Mathf.Rad2Deg;
 
-            while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) > 0.05f)
+            while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.z, targetAngle)) > 0.05f)
             {
                 float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, TurnSpeed * Time.deltaTime);
-                transform.eulerAngles = Vector2.up * angle;
+                transform.eulerAngles = new Vector3(0, 0, angle);
 
                 yield return null;
             }
@@ -80,13 +80,16 @@ namespace UnknownGames
 
         IEnumerator FollowPath(Vector3[] waypoints)
         {
-            transform.position = waypoints[0];
+            transform.position = waypoints[0]; 
 
             int targetWaypointIndex = 1;
             bool reachedLastWaypoint = false;
             Vector3 targetWaypoint = waypoints[targetWaypointIndex];
-            //transform.LookAt(new Vector3(targetWaypoint.x, targetWaypoint.y, 0));
-            transform.right = targetWaypoint - transform.position;
+            // new Vector3(transform.position.x, transform.position.y, targetWaypoint.z)
+            //transform.LookAt(targetWaypoint);
+            //Vector2 dir = targetWaypoint - transform.position;
+            //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             while (true)
             {
@@ -116,8 +119,9 @@ namespace UnknownGames
                     }
 
                     targetWaypoint = waypoints[targetWaypointIndex];
+
                     yield return new WaitForSeconds(WaitTimeInSec);
-                    StartCoroutine(FaceNextWaypoint(targetWaypoint));
+                    yield return StartCoroutine(FaceNextWaypoint(targetWaypoint));
                 }
 
                 yield return null;
