@@ -23,10 +23,6 @@ namespace UnknownGames
 
         #region UNITY METHODS
 
-        private void Awake()
-        {
-        }
-
         private void Start()
         {
             Vector3[] waypoint = new Vector3[pathHolder.childCount];
@@ -37,11 +33,6 @@ namespace UnknownGames
             }
 
             StartCoroutine(FollowPath(waypoint));
-        }
-
-        private void Update()
-        {
-
         }
 
         private void OnDrawGizmos()
@@ -96,7 +87,7 @@ namespace UnknownGames
                 transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), new Vector2(targetWaypoint.x, targetWaypoint.y), MoveSpeed * Time.deltaTime);
                 //transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, MoveSpeed * Time.deltaTime);
 
-                if (transform.position == targetWaypoint)
+                if (transform.position == new Vector3(targetWaypoint.x, targetWaypoint.y, 0))
                 {
                     if (!reachedLastWaypoint)
                     {
