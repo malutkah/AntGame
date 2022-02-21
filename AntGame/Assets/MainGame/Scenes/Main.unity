@@ -200,7 +200,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1776190396}
   m_Father: {fileID: 1070832845}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -812,7 +813,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 219359226}
-  - {fileID: 1776190396}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65885,12 +65885,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776190395}
-  m_LocalRotation: {x: -0, y: -0, z: -0.6273611, w: 0.7787285}
-  m_LocalPosition: {x: 0.040000916, y: 0.030000687, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.018950189, w: 0.9998204}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1070832845}
-  m_RootOrder: 1
+  m_Father: {fileID: 219359226}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1776190397
 MonoBehaviour:
@@ -65917,10 +65917,10 @@ MonoBehaviour:
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
+  m_PointLightInnerAngle: 56.98
+  m_PointLightOuterAngle: 56.98
   m_PointLightInnerRadius: 2.74
-  m_PointLightOuterRadius: 4.9422245
+  m_PointLightOuterRadius: 4.168583
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
