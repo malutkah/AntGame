@@ -23,6 +23,7 @@ namespace UnknownGames
         private void Start()
         {
             EnemyGuard.OnPlayerWasSpotted += ShowGameLoseUI;
+            FindObjectOfType<PlayerMovement>().OnReachedExit += ShowGameWinUI;
         }
 
         private void Update()
@@ -54,6 +55,7 @@ namespace UnknownGames
         {
             panel.SetActive(true);
             gameIsOver = true;
+            FindObjectOfType<PlayerMovement>().OnReachedExit -= ShowGameWinUI;
             EnemyGuard.OnPlayerWasSpotted -= ShowGameLoseUI;
         }
 

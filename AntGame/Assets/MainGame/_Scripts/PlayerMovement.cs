@@ -4,6 +4,8 @@ namespace UnknownGames
 {
     public class PlayerMovement : MonoBehaviour
     {
+        public event System.Action OnReachedExit;
+
         #region PRIVATE VARIABLES
 
         // private variables here
@@ -25,6 +27,19 @@ namespace UnknownGames
         #endregion
 
         #region UNITY METHODS
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.tag == "Finish")
+            {
+                Disable();
+
+                if (OnReachedExit != null)
+                {
+                    OnReachedExit();
+                }
+            }
+        }
 
         private void Start()
         {
