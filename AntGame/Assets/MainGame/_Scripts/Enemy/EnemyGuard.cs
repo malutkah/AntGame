@@ -6,7 +6,7 @@ namespace UnknownGames
 {
     public class EnemyGuard : MonoBehaviour
     {
-        public static event System.Action OnPlayerWasSpotted;
+        //public static event System.Action OnPlayerWasSpotted;
 
         #region PRIVATE VARIABLES
 
@@ -74,10 +74,7 @@ namespace UnknownGames
             if (playerVisibleTimer >= TimeToSpotPlayer)
             {
                 // player got spotted
-                if (OnPlayerWasSpotted != null)
-                {
-                    OnPlayerWasSpotted();
-                }
+                MissionManager.instance.WasPlayerSpotted = true;
             }
         }
 
@@ -143,11 +140,6 @@ namespace UnknownGames
             int targetWaypointIndex = 1;
             bool reachedLastWaypoint = false;
             Vector3 targetWaypoint = waypoints[targetWaypointIndex];
-            // new Vector3(transform.position.x, transform.position.y, targetWaypoint.z)
-            //transform.LookAt(targetWaypoint);
-            //Vector2 dir = targetWaypoint - transform.position;
-            //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             while (true)
             {

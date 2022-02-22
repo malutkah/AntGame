@@ -22,8 +22,8 @@ namespace UnknownGames
 
         private void Start()
         {
-            EnemyGuard.OnPlayerWasSpotted += ShowGameLoseUI;
-            FindObjectOfType<PlayerMovement>().OnReachedExit += ShowGameWinUI;
+            MissionManager.OnPlayerGotSpotted += ShowGameLoseUI;
+            MissionManager.OnPlayerReachedGoal += ShowGameWinUI;
         }
 
         private void Update()
@@ -39,31 +39,29 @@ namespace UnknownGames
 
         #endregion
 
-        #region PRIVATE METHODS
-
-        private void ShowGameWinUI()
-        {
-            OnGameOver(GameWinUI);
-        }
-
-        private void ShowGameLoseUI()
-        {
-            OnGameOver(GameLoseUI);
-        }
+        #region PRIVATE METHODS        
 
         private void OnGameOver(GameObject panel)
         {
             panel.SetActive(true);
             gameIsOver = true;
-            FindObjectOfType<PlayerMovement>().OnReachedExit -= ShowGameWinUI;
-            EnemyGuard.OnPlayerWasSpotted -= ShowGameLoseUI;
+            MissionManager.OnPlayerReachedGoal -= ShowGameWinUI;
+            MissionManager.OnPlayerGotSpotted -= ShowGameLoseUI;
         }
 
         #endregion
 
         #region PUBLIC METHODS
 
-        // public methods here
+        public void ShowGameWinUI()
+        {
+            OnGameOver(GameWinUI);
+        }
+
+        public void ShowGameLoseUI()
+        {
+            OnGameOver(GameLoseUI);
+        }
 
         #endregion
     }

@@ -4,7 +4,7 @@ namespace UnknownGames
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public event System.Action OnReachedExit;
+        //public event System.Action OnReachedExit;
 
         #region PRIVATE VARIABLES
 
@@ -34,10 +34,12 @@ namespace UnknownGames
             {
                 Disable();
 
-                if (OnReachedExit != null)
-                {
-                    OnReachedExit();
-                }
+                MissionManager.instance.PlayerReachedGoal = true;
+
+                //if (OnReachedExit != null)
+                //{
+                //    OnReachedExit();
+                //}
             }
         }
 
@@ -46,12 +48,12 @@ namespace UnknownGames
             rigidbody2d = GetComponent<Rigidbody2D>();
             viewCamera = Camera.main;
 
-            EnemyGuard.OnPlayerWasSpotted += Disable;
+            MissionManager.OnPlayerGotSpotted += Disable;
         }
 
         private void OnDestroy()
         {
-            EnemyGuard.OnPlayerWasSpotted -= Disable;
+            MissionManager.OnPlayerGotSpotted -= Disable;
         }
 
         private void Update()
