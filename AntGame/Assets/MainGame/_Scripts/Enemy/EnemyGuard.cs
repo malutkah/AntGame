@@ -6,10 +6,13 @@ namespace UnknownGames
 {
     public class EnemyGuard : MonoBehaviour
     {
+        public static event System.Action OnPlayerWasSpotted;
+
         #region PRIVATE VARIABLES
 
         // private variables here
         private float viewAngle;
+        private float playerVisibleTimer;
         private Transform player;
         private Color originalSpotLightColor;
 
@@ -19,13 +22,16 @@ namespace UnknownGames
 
         // public variables here
         public Transform pathHolder;
+        
         public float MoveSpeed = 5f;
         public float WaitTimeInSec = 1f;
         public float TurnSpeed = 90f;
+        public float ViewDistance;
+        public float TimeToSpotPlayer = 1f;
+
         public LayerMask ViewMask;
         public Light2D SpotLight;
 
-        public float ViewDistance;
 
         #endregion
 
@@ -55,11 +61,23 @@ namespace UnknownGames
         {
             if (CanSeePlayer())
             {
-                SpotLight.color = Color.red;
+                playerVisibleTimer += Time.deltaTime;
             }
             else
             {
-                SpotLight.color = originalSpotLightColor;
+                playerVisibleTimer -= Time.deltaTime;
+            }
+
+            playerVisibleTimer = Mathf.Clamp(playerVisibleTimer, 0, TimeToSpotPlayer);
+            SpotLight.color = Color.Lerp(originalSpotLightColor, Color.red, playerVisibleTimer / TimeToSpotPlayer);
+
+            if (playerVisibleTimer >= TimeToSpotPlayer)
+            {
+                // player got spotted
+                if (OnPlayerWasSpotted != null)
+                {
+                    OnPlayerWasSpotted();
+                }
             }
         }
 
@@ -75,29 +93,26 @@ namespace UnknownGames
                 prevPos = waypoint.position;
             }
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawRay(transform.position, transform.position * ViewDistance);
-
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(transform.position, transform.up * ViewDistance);
         }
 
         #endregion
 
         #region PRIVATE METHODS
 
-        // private methods here
-
         private bool CanSeePlayer()
         {
-            if ((Vector3.Distance(transform.position, player.position) / 10f) < (ViewDistance * 10f))
+            if (Vector3.Distance(transform.position, player.position) < ViewDistance)
             {
                 Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
                 //new Vector3(0, transform.position.y, transform.position.z)
-                float angleBetweenGuardAndPlayer = Vector3.Angle(new Vector3(0, transform.position.y, transform.position.z), directionToPlayer);
+                float angleBetweenGuardAndPlayer = Vector3.Angle(transform.up, directionToPlayer);
 
                 if (angleBetweenGuardAndPlayer < viewAngle / 2f)
                 {
-                    if (Physics.Linecast(transform.position, player.position, ViewMask))
+                    if (!Physics.Linecast(transform.position, player.position, ViewMask))
                     {
                         return true;
                     }

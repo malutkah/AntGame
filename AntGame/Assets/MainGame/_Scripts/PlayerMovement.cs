@@ -12,6 +12,7 @@ namespace UnknownGames
         private Rigidbody2D rigidbody2d;
         private Camera viewCamera;
         private Vector2 moveDir;
+        private bool disableMovement;
 
         #endregion
 
@@ -29,17 +30,17 @@ namespace UnknownGames
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
             viewCamera = Camera.main;
+
+            EnemyGuard.OnPlayerWasSpotted += Disable;
+        }
+
+        private void OnDestroy()
+        {
+            EnemyGuard.OnPlayerWasSpotted -= Disable;
         }
 
         private void Update()
         {
-            //Vector3 mousePos = Input.mousePosition;
-            //mousePos = viewCamera.ScreenToWorldPoint(mousePos);
-
-            //Vector2 direction = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
-
-            //transform.up = direction;
-
             moveDir = Vector2.zero;
             var dir = Input.mousePosition - viewCamera.WorldToScreenPoint(transform.position);
             var angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
@@ -47,21 +48,26 @@ namespace UnknownGames
 
             #region Movement
 
-            if (Input.GetKey(KeyCode.A))
+            moveDir = Vector2.zero;
+
+            if (!disableMovement)
             {
-                moveDir.x = -1;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                moveDir.x = 1;
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                moveDir.y = 1;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                moveDir.y = -1;
+                if (Input.GetKey(KeyCode.A))
+                {
+                    moveDir.x = -1;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    moveDir.x = 1;
+                }
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveDir.y = 1;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveDir.y = -1;
+                }
             }
 
             moveDir.Normalize();
@@ -79,6 +85,11 @@ namespace UnknownGames
         #region PRIVATE METHODS
 
         // private methods here
+
+        private void Disable()
+        {
+            disableMovement = true;
+        }
 
         private void CollideWithTiles()
         {

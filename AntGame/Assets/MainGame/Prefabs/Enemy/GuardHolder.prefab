@@ -313,7 +313,10 @@ MonoBehaviour:
   MoveSpeed: 3
   WaitTimeInSec: 0.4
   TurnSpeed: 90
-  SpotLight: {fileID: 0}
+  ViewMask:
+    serializedVersion: 2
+    m_Bits: 0
+  SpotLight: {fileID: 2354461933409665372}
   ViewDistance: 0
 --- !u!1 &7218471412940619746
 GameObject:
