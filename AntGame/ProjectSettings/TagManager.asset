@@ -14,7 +14,7 @@ TagManager:
   - Blocking
   - Obstacles
   - Targets
-  - 
+  - Exit
   - 
   - 
   - 
@@ -52,4 +52,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3485347811
+    locked: 0
+  - name: Target
+    uniqueID: 984279853
+    locked: 0
+  - name: Exit
+    uniqueID: 3578606869
     locked: 0

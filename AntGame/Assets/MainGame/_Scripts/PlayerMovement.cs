@@ -4,6 +4,8 @@ namespace UnknownGames
 {
     public class PlayerMovement : MonoBehaviour
     {
+        //public event System.Action OnReachedExit;
+
         #region PRIVATE VARIABLES
 
         // private variables here
@@ -11,6 +13,8 @@ namespace UnknownGames
         private RaycastHit2D hit;
         private Rigidbody2D rigidbody2d;
         private Camera viewCamera;
+        private Vector2 moveDir;
+        private bool disableMovement;
 
         #endregion
 
@@ -24,29 +28,73 @@ namespace UnknownGames
 
         #region UNITY METHODS
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.tag == "Finish")
+            {
+                Disable();
+
+                MissionManager.instance.PlayerReachedGoal = true;
+
+                //if (OnReachedExit != null)
+                //{
+                //    OnReachedExit();
+                //}
+            }
+        }
+
         private void Start()
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
             viewCamera = Camera.main;
+
+            MissionManager.OnPlayerGotSpotted += Disable;
+        }
+
+        private void OnDestroy()
+        {
+            MissionManager.OnPlayerGotSpotted -= Disable;
         }
 
         private void Update()
         {
+            moveDir = Vector2.zero;
             var dir = Input.mousePosition - viewCamera.WorldToScreenPoint(transform.position);
             var angle = Mathf.Atan2(-dir.x, dir.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            CollideWithTiles();
-
             #region Movement
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
 
-            //MoveDelta reset
-            moveDelta = new Vector3(x, y, 0) * Time.deltaTime * speed;
+            moveDir = Vector2.zero;
 
-            transform.localScale = Vector3.one;
+            if (!disableMovement)
+            {
+                if (Input.GetKey(KeyCode.A))
+                {
+                    moveDir.x = -1;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    moveDir.x = 1;
+                }
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveDir.y = 1;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveDir.y = -1;
+                }
+            }
+
+            moveDir.Normalize();
+
             #endregion
+        }
+
+        private void FixedUpdate()
+        {
+            rigidbody2d.MovePosition(rigidbody2d.position + moveDir * speed * Time.fixedDeltaTime);
         }
 
         #endregion
@@ -54,6 +102,11 @@ namespace UnknownGames
         #region PRIVATE METHODS
 
         // private methods here
+
+        private void Disable()
+        {
+            disableMovement = true;
+        }
 
         private void CollideWithTiles()
         {
