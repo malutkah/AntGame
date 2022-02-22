@@ -35,11 +35,6 @@ namespace UnknownGames
                 Disable();
 
                 MissionManager.instance.PlayerReachedGoal = true;
-
-                //if (OnReachedExit != null)
-                //{
-                //    OnReachedExit();
-                //}
             }
         }
 
