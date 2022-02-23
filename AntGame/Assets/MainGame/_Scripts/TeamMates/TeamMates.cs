@@ -6,8 +6,6 @@ public class TeamMates : MonoBehaviour
 {
     #region PRIVATE VARIABLES
 
-    private float moveSpeed;
-
     #endregion
 
     #region PUBLIC VARIABLES

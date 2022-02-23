@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TeamMate
   layers:
   - Default
   - TransparentFX
@@ -58,4 +59,7 @@ TagManager:
     locked: 0
   - name: Exit
     uniqueID: 3578606869
+    locked: 0
+  - name: TeamMate
+    uniqueID: 3302761981
     locked: 0

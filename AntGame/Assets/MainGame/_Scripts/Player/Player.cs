@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
 
     #region PUBLIC VARIABLES
 
+    public List<GameObject> Team;
+    public int MaxTeamSize;
+    public int MinTeamSize;
+
     #endregion
 
     #region UNITY METHODS
@@ -32,6 +36,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region PUBLIC METHODS
+
+    public void FillTeam(GameObject teamMate)
+    {
+        Team.Add(teamMate);
+    }
 
     #endregion
 }
