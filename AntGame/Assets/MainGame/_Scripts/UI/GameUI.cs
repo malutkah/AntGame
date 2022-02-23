@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace UnknownGames
 {
-    public class UI : MonoBehaviour
+    public class GameUI : MonoBehaviour
     {
         #region PRIVATE VARIABLES
 

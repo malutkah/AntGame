@@ -17,7 +17,7 @@ namespace UnknownGames
         public GameManager instance;
         
         public bool IsGameOver;
-        public UI Ui;
+        public GameUI Ui;
 
 
         #endregion

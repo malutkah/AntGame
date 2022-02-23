@@ -90,7 +90,7 @@ namespace UnknownGames
                 prevPos = waypoint.position;
             }
 
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.green;
             Gizmos.DrawRay(transform.position, transform.up * ViewDistance);
         }
 
