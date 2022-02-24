@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnknownGames
@@ -14,6 +15,12 @@ namespace UnknownGames
         #region PRIVATE VARIABLES
 
         // private variables here
+        private GameUI ui;
+        private GameObject teamPanel;
+        private GameObject teamBox;
+
+        [SerializeField]
+        private List<GameObject> teamMatesUi;
 
         #endregion
 
@@ -32,7 +39,26 @@ namespace UnknownGames
 
         private void Awake()
         {
-            instance = this;
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            ui = GameObject.FindGameObjectWithTag("MissionUI").GetComponent<GameUI>();
+            teamPanel = GameObject.FindGameObjectWithTag("Team");
+            teamBox = teamPanel.transform.GetChild(0).gameObject;
+        }
+
+        private void Start()
+        {
+            for (int c = 0; c < 8; c++)
+            {
+                teamMatesUi.Add(teamBox.transform.GetChild(c).gameObject);
+            }
         }
 
         private void Update()

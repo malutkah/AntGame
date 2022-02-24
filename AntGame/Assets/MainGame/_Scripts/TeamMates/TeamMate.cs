@@ -13,6 +13,12 @@ namespace UnknownGames
         [SerializeField]
         private float distanceToPlayer;
 
+        private float hp;
+        private float stealth;
+        private float damage;
+        private float speed;
+        private float power;
+
         #endregion
 
         #region PUBLIC VARIABLES
@@ -25,6 +31,11 @@ namespace UnknownGames
         #endregion
 
         #region UNITY METHODS
+
+        private void Awake()
+        {
+
+        }
 
         private void Start()
         {
@@ -59,8 +70,8 @@ namespace UnknownGames
         // stay at current position
         // fight selected enemy
         // pick up item and:
-        // go home
-        // come back (faster)
+            // go home
+            // come back (faster)
 
         #endregion
     }

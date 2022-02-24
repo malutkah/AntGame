@@ -4,8 +4,6 @@ namespace UnknownGames
 {
     public class GameManager : MonoBehaviour
     {
-
-
         #region PRIVATE VARIABLES
 
         // private variables here
@@ -14,11 +12,10 @@ namespace UnknownGames
 
         #region PUBLIC VARIABLES
 
-        public GameManager instance;
+        public static GameManager instance;
         
         public bool IsGameOver;
-        public GameUI Ui;
-
+        public GameObject PlayerGO;
 
         #endregion
 
@@ -26,7 +23,7 @@ namespace UnknownGames
 
         private void Awake()
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = this;
             }
