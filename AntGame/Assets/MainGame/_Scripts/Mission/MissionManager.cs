@@ -9,6 +9,7 @@ namespace UnknownGames
 
         public static event System.Action OnPlayerReachedGoal;
         public static event System.Action OnPlayerGotSpotted;
+        public static event System.Action OnMissionStart;
 
         #endregion
 
@@ -32,6 +33,8 @@ namespace UnknownGames
         public bool WasPlayerSpotted;
         [HideInInspector]
         public bool PlayerReachedGoal;
+        [HideInInspector]
+        public int TeamSize;
 
         #endregion
 
@@ -55,7 +58,7 @@ namespace UnknownGames
 
         private void Start()
         {
-            for (int c = 0; c < 8; c++)
+            for (int c = 0; c < TeamSize; c++)
             {
                 teamMatesUi.Add(teamBox.transform.GetChild(c).gameObject);
             }

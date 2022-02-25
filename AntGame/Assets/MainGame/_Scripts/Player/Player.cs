@@ -15,21 +15,28 @@ namespace UnknownGames
         private float damage;
         private float speed;
         private float power;
+        private int MinTeamSize = 0;
 
         #endregion
 
         #region PUBLIC VARIABLES
 
         public List<GameObject> Team;
-        public int MaxTeamSize;
-        public int MinTeamSize;
+        public int MaxTeamSize = 2;
 
         #endregion
 
         #region UNITY METHODS
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         private void Start()
         {
+            // testing
+            // add team mates to list
         }
 
         private void Update()
@@ -44,10 +51,22 @@ namespace UnknownGames
         #endregion
 
         #region PUBLIC METHODS
+        
+        public void MissionStart()
+        {
+            MissionManager.instance.TeamSize = Team.Count;
+        }
 
         public void FillTeam(GameObject teamMate)
         {
-            Team.Add(teamMate);
+            if (Team.Count <= MaxTeamSize)
+            {
+                Team.Add(teamMate);
+            }
+            else
+            {
+                Debug.Log("Team is full");
+            }
         }
 
         #endregion

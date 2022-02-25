@@ -678,6 +678,26 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -8.81
       objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 77.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 77.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 2.9529588
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[0]
+      value: -1382961595
+      objectReference: {fileID: 0}
     - target: {fileID: 2354461933555946564, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
       propertyPath: m_SortingOrder
       value: 0
@@ -963,6 +983,46 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 69.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightOuterAngle
+      value: 69.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 3.0184355
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 3.4101477
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665372, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[0]
+      value: -1382961595
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665373, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665373, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665373, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354461933409665373, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2354461933555946570, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
       propertyPath: MoveSpeed
       value: 2.5
@@ -1005,11 +1065,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5401038192070560159, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.42
+      value: -31.58
       objectReference: {fileID: 0}
     - target: {fileID: 5401038192070560159, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.54
+      value: -5.9
       objectReference: {fileID: 0}
     - target: {fileID: 5401038192070560159, guid: fc221c20977bd89479ad6cdd174df902, type: 3}
       propertyPath: m_LocalPosition.z
@@ -69098,6 +69158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f9cd86d4b5364409a9dcb8a7d585a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamMatesUi: []
   WasPlayerSpotted: 0
   PlayerReachedGoal: 0
 --- !u!4 &1769209300
