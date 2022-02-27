@@ -32,7 +32,8 @@ namespace UnknownGames
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    SceneManager.LoadScene(0);
+                    //SceneManager.LoadScene(0);
+                    Application.LoadLevel(Application.loadedLevel);
                 }
             }
         }

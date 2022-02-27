@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UnknownGames
 {
@@ -38,10 +39,14 @@ namespace UnknownGames
             }
         }
 
+        private void Awake()
+        {
+            viewCamera = Camera.main;
+        }
+
         private void Start()
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
-            viewCamera = Camera.main;
 
             MissionManager.OnPlayerGotSpotted += Disable;
         }

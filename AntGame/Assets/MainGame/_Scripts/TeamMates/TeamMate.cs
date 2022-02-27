@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace UnknownGames
 {
@@ -46,9 +47,9 @@ namespace UnknownGames
         {
             playerTransform = PlayerGO.transform;
         }
-
         private void Update()
         {
+            transform.up = playerTransform.position - transform.position;
             FollowPlayer();
         }
 
@@ -70,22 +71,10 @@ namespace UnknownGames
 
         // follow player
         public void FollowPlayer()
-        {
+        {            
             if (Vector2.Distance(transform.position, playerTransform.position) > distanceToPlayer + distanceToMate)
             {
-                Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-
-                // face the player
-                float targetAngle = 270 + Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-                while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.z, directionToPlayer.x)) > 0.05f)
-                {
-                    float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, 100 * Time.deltaTime);
-                    transform.eulerAngles = new Vector3(0, 0, angle);
-
-                    transform.position = Vector2.MoveTowards(transform.position,
-                        playerTransform.position, MoveSpeed * Time.deltaTime);
-                }
+                transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, MoveSpeed * Time.deltaTime);
             }
         }
 

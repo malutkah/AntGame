@@ -30,7 +30,7 @@ namespace UnknownGames
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject); => do DontDestroy befor changing scenes
         }
 
         private void Start()

@@ -44,7 +44,7 @@ namespace UnknownGames
 
         private void Start()
         {
-            viewAngle = SpotLight.pointLightInnerAngle;
+            viewAngle = SpotLight.pointLightOuterAngle;
             originalSpotLightColor = SpotLight.color;
 
             Vector3[] waypoint = new Vector3[pathHolder.childCount];
