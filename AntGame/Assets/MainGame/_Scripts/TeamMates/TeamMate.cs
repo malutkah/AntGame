@@ -26,6 +26,8 @@ namespace UnknownGames
         private float speed;
         private float power;
 
+        private Rigidbody2D rigidbody2D;
+
         #endregion
 
         #region PUBLIC VARIABLES
@@ -41,14 +43,22 @@ namespace UnknownGames
         private void Awake()
         {
             PlayerGO = GameObject.FindGameObjectWithTag("Player");
+
+            rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         private void Start()
         {
             playerTransform = PlayerGO.transform;
         }
-        private void Update()
+
+        private void OnCollisionExit2D(Collision2D collision)
         {
+            rigidbody2D.velocity = Vector2.zero;
+        }
+
+        private void Update()
+        {            
             transform.up = playerTransform.position - transform.position;
             FollowPlayer();
         }
@@ -71,7 +81,7 @@ namespace UnknownGames
 
         // follow player
         public void FollowPlayer()
-        {            
+        {
             if (Vector2.Distance(transform.position, playerTransform.position) > distanceToPlayer + distanceToMate)
             {
                 transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, MoveSpeed * Time.deltaTime);
