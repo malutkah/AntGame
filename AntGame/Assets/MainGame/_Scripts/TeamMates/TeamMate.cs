@@ -59,8 +59,8 @@ namespace UnknownGames
 
         private void Update()
         {            
-            transform.up = playerTransform.position - transform.position;
-            FollowPlayer();
+            //transform.up = playerTransform.position - transform.position;
+            //FollowPlayer();
         }
 
         private void OnDrawGizmos()
