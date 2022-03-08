@@ -59,7 +59,7 @@ namespace UnknownGames
 
         private void Update()
         {            
-            //transform.up = playerTransform.position - transform.position;
+            transform.up = playerTransform.position - transform.position;
             //FollowPlayer();
         }
 

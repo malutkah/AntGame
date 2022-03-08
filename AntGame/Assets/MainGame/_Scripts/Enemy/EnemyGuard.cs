@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -13,8 +14,9 @@ namespace UnknownGames
         // private variables here
         private float viewAngle;
         private float playerVisibleTimer;
-        private Transform player;
+        private GameObject player;
         private Color originalSpotLightColor;
+        private List<GameObject> teamMates;
 
         #endregion
 
@@ -22,7 +24,7 @@ namespace UnknownGames
 
         // public variables here
         public Transform pathHolder;
-        
+
         public float MoveSpeed = 5f;
         public float WaitTimeInSec = 1f;
         public float TurnSpeed = 90f;
@@ -39,7 +41,8 @@ namespace UnknownGames
 
         private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = GameObject.FindGameObjectWithTag("Player");
+            teamMates = player.GetComponent<Player>().Team;
         }
 
         private void Start()
@@ -59,7 +62,7 @@ namespace UnknownGames
 
         private void Update()
         {
-            if (CanSeePlayer())
+            if (CanSeePlayer() || CanSeeTeamMates())
             {
                 playerVisibleTimer += Time.deltaTime;
             }
@@ -100,18 +103,42 @@ namespace UnknownGames
 
         private bool CanSeePlayer()
         {
-            if (Vector3.Distance(transform.position, player.position) < ViewDistance)
+            if (Vector3.Distance(transform.position, player.transform.position) < ViewDistance)
             {
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
 
                 //new Vector3(0, transform.position.y, transform.position.z)
                 float angleBetweenGuardAndPlayer = Vector3.Angle(transform.up, directionToPlayer);
 
                 if (angleBetweenGuardAndPlayer < viewAngle / 2f)
                 {
-                    if (!Physics.Linecast(transform.position, player.position, ViewMask))
+                    if (!Physics.Linecast(transform.position, player.transform.position, ViewMask))
                     {
                         return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool CanSeeTeamMates()
+        {
+            foreach (var mate in teamMates)
+            {
+                if (Vector3.Distance(transform.position, mate.transform.position) < ViewDistance)
+                {
+                    Vector3 directionToMate = (mate.transform.position - transform.position).normalized;
+
+                    //new Vector3(0, transform.position.y, transform.position.z)
+                    float angleBetweenGuardAndMate = Vector3.Angle(transform.up, directionToMate);
+
+                    if (angleBetweenGuardAndMate < viewAngle / 2f)
+                    {
+                        if (!Physics.Linecast(transform.position, mate.transform.position, ViewMask))
+                        {
+                            return true;
+                        }
                     }
                 }
             }

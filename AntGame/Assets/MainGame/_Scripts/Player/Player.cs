@@ -35,7 +35,6 @@ namespace UnknownGames
 
         private void Start()
         {
-            // testing
             // add team mates to list
         }
 
