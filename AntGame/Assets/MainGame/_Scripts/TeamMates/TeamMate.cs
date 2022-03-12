@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using Pathfinding;
 
 namespace UnknownGames
 {
@@ -27,14 +27,17 @@ namespace UnknownGames
         private float power;
 
         private Rigidbody2D rigidbody2D;
+        private Player player;
 
         #endregion
 
         #region PUBLIC VARIABLES
 
-        // public variables here
+        public AIPath path;
+        public AIDestinationSetter destinationSetter;
         public float Health;
         public float MoveSpeed;
+        public bool stopped;
 
         #endregion
 
@@ -43,6 +46,9 @@ namespace UnknownGames
         private void Awake()
         {
             PlayerGO = GameObject.FindGameObjectWithTag("Player");
+            player = PlayerGO.GetComponent<Player>();
+            path = GetComponent<AIPath>();
+            destinationSetter = GetComponent<AIDestinationSetter>();
 
             rigidbody2D = GetComponent<Rigidbody2D>();
         }
@@ -50,6 +56,7 @@ namespace UnknownGames
         private void Start()
         {
             playerTransform = PlayerGO.transform;
+            stopped = false;
         }
 
         private void OnCollisionExit2D(Collision2D collision)
@@ -58,9 +65,20 @@ namespace UnknownGames
         }
 
         private void Update()
-        {            
+        {
             transform.up = playerTransform.position - transform.position;
-            //FollowPlayer();
+
+            if (Input.GetKeyDown(KeyCode.Q) && !stopped)
+            {
+                player.mate.path.enabled = false;
+                player.mate.stopped = true;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.E) && stopped)
+            {
+                player.mate.path.enabled = true;
+                player.mate.stopped = false;
+            }
         }
 
         private void OnDrawGizmos()
@@ -78,15 +96,6 @@ namespace UnknownGames
         #endregion
 
         #region PUBLIC METHODS
-
-        // follow player
-        public void FollowPlayer()
-        {
-            if (Vector2.Distance(transform.position, playerTransform.position) > distanceToPlayer + distanceToMate)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, MoveSpeed * Time.deltaTime);
-            }
-        }
 
         // stay at current position
         // fight selected enemy

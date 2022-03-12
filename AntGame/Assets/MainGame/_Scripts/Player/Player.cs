@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnknownGames;
+using Pathfinding;
 
 namespace UnknownGames
 {
@@ -21,8 +21,11 @@ namespace UnknownGames
 
         #region PUBLIC VARIABLES
 
-        public List<GameObject> Team;
+        public List<GameObject> TeamList;
         public int MaxTeamSize = 2;
+        public GameObject SelectedMate;
+        [HideInInspector] public TeamMate mate;
+
 
         #endregion
 
@@ -40,6 +43,26 @@ namespace UnknownGames
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                // select first mate from team list
+                SelectedMate = TeamList[0];
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                // select second mate from team list
+                SelectedMate = TeamList[1];
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // select all mate from team list
+                SelectedMate = TeamList[1];
+            }
+
+            if (SelectedMate != null)
+            {
+                mate = SelectedMate.GetComponent<TeamMate>();
+            }
         }
 
         #endregion
@@ -50,17 +73,17 @@ namespace UnknownGames
         #endregion
 
         #region PUBLIC METHODS
-        
+
         public void MissionStart()
         {
-            MissionManager.instance.TeamSize = Team.Count;
+            MissionManager.instance.TeamSize = TeamList.Count;
         }
 
         public void FillTeam(GameObject teamMate)
         {
-            if (Team.Count <= MaxTeamSize)
+            if (TeamList.Count <= MaxTeamSize)
             {
-                Team.Add(teamMate);
+                TeamList.Add(teamMate);
             }
             else
             {

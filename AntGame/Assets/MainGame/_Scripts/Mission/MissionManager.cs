@@ -20,7 +20,6 @@ namespace UnknownGames
         private GameObject teamPanel;
         private GameObject teamBox;
 
-        [SerializeField]
         private List<GameObject> teamMatesUi;
 
         #endregion
@@ -52,16 +51,16 @@ namespace UnknownGames
             }
 
             ui = GameObject.FindGameObjectWithTag("MissionUI").GetComponent<GameUI>();
-            teamPanel = GameObject.FindGameObjectWithTag("Team");
-            teamBox = teamPanel.transform.GetChild(0).gameObject;
+            //teamPanel = GameObject.FindGameObjectWithTag("Team");
+            //teamBox = teamPanel.transform.GetChild(0).gameObject;
         }
 
         private void Start()
         {
-            for (int c = 0; c < TeamSize; c++)
-            {
-                teamMatesUi.Add(teamBox.transform.GetChild(c).gameObject);
-            }
+            //for (int c = 0; c < TeamSize; c++)
+            //{
+            //    teamMatesUi.Add(teamBox.transform.GetChild(c).gameObject);
+            //}
         }
 
         private void Update()

@@ -65,3 +65,6 @@ TagManager:
   - name: TeamMate
     uniqueID: 3302761981
     locked: 0
+  - name: Item
+    uniqueID: 1378615651
+    locked: 0

@@ -42,7 +42,7 @@ namespace UnknownGames
         private void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            teamMates = player.GetComponent<Player>().Team;
+            teamMates = player.GetComponent<Player>().TeamList;
         }
 
         private void Start()
