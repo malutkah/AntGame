@@ -2926,7 +2926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team:
   - {fileID: 19709620}
-  - {fileID: 0}
+  - {fileID: 1145107484}
   MaxTeamSize: 0
 --- !u!1 &1070951848
 GameObject:
